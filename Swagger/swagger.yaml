@@ -1,0 +1,197 @@
+openapi: 3.0.0
+info:
+  title: Gestor Tareas API
+  description: API para gestionar tareas
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Servidor local
+
+tags:
+  - name: Tareas
+    description: Operaciones relacionadas con la gestión de tareas
+
+paths:
+  /tasks:
+    get:
+      tags:
+        - Tareas
+      summary: Obtener todas las tareas
+      operationId: getAllTasks
+      responses:
+        "200":
+          description: Lista de tareas obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    priority:
+                      type: string
+              examples:
+                ejemplo1:
+                  value:
+                    - id: 1
+                      title: "Tarea de prueba"
+                      description: "Descripción de prueba"
+                      priority: "HIGH"
+
+    post:
+      tags:
+        - Tareas
+      summary: Crear una nueva tarea
+      operationId: createTask
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                priority:
+                  type: string
+            examples:
+              ejemplo1:
+                value:
+                  title: "Prueba POST Spring Boot"
+                  description: "Desarrollar API con Hibernate"
+                  priority: "HIGH"
+      responses:
+        "201":
+          description: Tarea creada correctamente
+
+  /tasks/search:
+    get:
+      tags:
+        - Tareas
+      summary: Buscar tarea por título
+      operationId: searchTask
+      parameters:
+        - name: title
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tarea encontrada correctamente
+          content:
+            application/json:
+              examples:
+                ejemplo1:
+                  value:
+                    - id: 2
+                      title: "Hacer video demo"
+                      description: "Preparar presentación"
+                      priority: "MEDIUM"
+
+  /tasks/status/{status}:
+    get:
+      tags:
+        - Tareas
+      summary: Obtener tareas por estado
+      operationId: getTasksByStatus
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tareas filtradas por estado
+          content:
+            application/json:
+              examples:
+                ejemplo1:
+                  value:
+                    - id: 3
+                      title: "Finalizar reporte"
+                      description: "Completar informe de progreso"
+                      priority: "LOW"
+
+  /tasks/{id}:
+    get:
+      tags:
+        - Tareas
+      summary: Obtener una tarea por ID
+      operationId: getTaskById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Tarea obtenida correctamente
+          content:
+            application/json:
+              examples:
+                ejemplo1:
+                  value:
+                    id: 12
+                    title: "Tarea específica"
+                    description: "Detalles de la tarea"
+                    priority: "HIGH"
+
+    put:
+      tags:
+        - Tareas
+      summary: Actualizar una tarea por ID
+      operationId: updateTaskById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                priority:
+                  type: string
+            examples:
+              ejemplo1:
+                value:
+                  title: "Prueba POST 2 Spring Boot"
+                  description: "Desarrollar API con Hibernate 2"
+                  priority: "HIGH"
+      responses:
+        "200":
+          description: Tarea actualizada correctamente
+
+    delete:
+      tags:
+        - Tareas
+      summary: Eliminar una tarea por ID
+      operationId: deleteTaskById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Tarea eliminada correctamente
