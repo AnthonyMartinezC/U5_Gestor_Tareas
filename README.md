@@ -1,8 +1,8 @@
 # README
 
-## Proyecto Spring Boot con Maven
+## Proyecto Spring Boot 
 
-Este proyecto es una aplicación Spring Boot que utiliza Maven para la gestión de dependencias.
+Este proyecto es una API creada con Spring Boot , que podemos probar con Swagger. 
 
 ### Requisitos
 
